@@ -1,0 +1,71 @@
+/* ANILOKA — SPLASH SCREEN */
+.splash{
+  position:relative; min-height:100vh; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:radial-gradient(ellipse at 50% 30%, #171410 0%, var(--void) 62%);
+  text-align:center; padding:20px;
+}
+#particle-canvas{ position:absolute; inset:0; z-index:1; }
+
+.splash-glow{
+  position:absolute; width:640px; height:640px; border-radius:50%;
+  background:radial-gradient(circle, var(--gold-glow) 0%, transparent 68%);
+  filter:blur(10px); z-index:1; opacity:0;
+  animation:glow-in 2.2s var(--ease) .2s forwards;
+}
+@keyframes glow-in{ to{ opacity:1; transform:scale(1.05); } }
+
+.splash-content{ position:relative; z-index:2; }
+
+.splash-mark{
+  font-family:var(--display);
+  font-size:clamp(56px,13vw,124px);
+  letter-spacing:.04em; line-height:1;
+  opacity:0; transform:translateY(24px) scale(.94);
+  animation:mark-in 1.1s var(--ease) .3s forwards;
+}
+.splash-mark .ani{ color:var(--ink); }
+.splash-mark .loka{
+  color:var(--gold);
+  text-shadow:0 0 30px var(--gold-glow), 0 0 70px var(--gold-glow);
+  animation:gold-pulse 3.2s ease-in-out 1.6s infinite;
+}
+@keyframes mark-in{ to{ opacity:1; transform:translateY(0) scale(1); } }
+@keyframes gold-pulse{
+  0%,100%{ text-shadow:0 0 24px var(--gold-glow), 0 0 55px var(--gold-glow); }
+  50%{ text-shadow:0 0 40px var(--gold-glow), 0 0 90px var(--gold-glow); }
+}
+
+.splash-rule{
+  width:0; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:18px auto 14px; animation:rule-in 1s var(--ease) 1.1s forwards;
+}
+@keyframes rule-in{ to{ width:220px; } }
+
+.splash-tagline{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size:clamp(16px,3vw,21px); color:var(--ink-dim); letter-spacing:.04em;
+  opacity:0; animation:fade-up 1s var(--ease) 1.3s forwards;
+}
+@keyframes fade-up{ from{ opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+.splash-enter{
+  margin-top:40px; opacity:0;
+  animation:fade-up 1s var(--ease) 1.9s forwards;
+}
+.splash-enter .btn-primary{
+  padding:16px 52px; font-size:14px; letter-spacing:.12em; text-transform:uppercase;
+}
+.splash-hint{
+  margin-top:16px; font-size:11px; color:var(--ink-faint); letter-spacing:.08em;
+  opacity:0; animation:fade-up 1s var(--ease) 2.2s forwards;
+}
+
+.splash-footer{
+  position:absolute; bottom:22px; z-index:2; font-size:10.5px; color:var(--ink-faint);
+  letter-spacing:.1em; text-transform:uppercase;
+}
+
+@media (max-width:520px){
+  .splash-enter .btn-primary{ padding:14px 40px; }
+}
