@@ -1,0 +1,13 @@
+{
+  "genres": [
+    "Genre 1",
+    "Genre 2",
+    "Genre 3",
+    "Genre 4",
+    "Genre 5",
+    "Genre 6",
+    "Genre 7",
+    "Genre 8"
+  ],
+  "note": "This file is a reference copy only — the site actually reads genres from the GENRES array at the top of js/data.js. Update both files together when you have your real genre list."
+}
