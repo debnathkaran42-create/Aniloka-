@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<div id="page-loader"><div class="loader-ring"></div></div>
+
+<header class="topnav">
+  <a href="home.html" class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></a>
+  <div class="topnav-actions">
+    <a href="search.html" class="icon-btn" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    </a>
+    <button class="avatar-btn" onclick="location.href='profile.html'">U</button>
+    <button class="hamburger" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav">
+  <button class="close-mobile">&times;</button>
+  <a href="home.html">Home</a>
+  <a href="search.html">Search</a>
+  <a href="library.html">Library</a>
+  <a href="premium.html">Premium</a>
+  <a href="profile.html">Profile</a>
+  <a href="#" id="mobile-logout">Log Out</a>
+</div>
+
+<main class="container">
+  <div class="hero" id="hero"></div>
+
+  <div class="genre-strip" id="genre-strip"></div>
+
+  <div class="ad-slot ad-banner"></div>
+
+  <section class="rail-section" id="section-continue">
+    <div class="rail-head"><h2>Continue Reading</h2></div>
+    <div class="rail" id="rail-continue"></div>
+  </section>
+
+  <section class="rail-section" id="section-latest">
+    <div class="rail-head"><h2>Latest Manga</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-latest"></div>
+  </section>
+
+  <section class="rail-section" id="section-trending">
+    <div class="rail-head"><h2>Trending</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-trending"></div>
+  </section>
+
+  <div class="ad-slot ad-banner"></div>
+
+  <section class="rail-section" id="section-popular">
+    <div class="rail-head"><h2>Popular</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-popular"></div>
+  </section>
+
+  <section class="rail-section" id="section-newchapters">
+    <div class="rail-head"><h2>New Chapters</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-newchapters"></div>
+  </section>
+
+  <section class="rail-section" id="section-recommended">
+    <div class="rail-head"><h2>Recommended For You</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-recommended"></div>
+  </section>
+
+  <section class="rail-section" id="section-recent">
+    <div class="rail-head"><h2>Recently Updated</h2><a class="see-all" href="search.html">See all →</a></div>
+    <div class="rail" id="rail-recent"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span class="wordmark" style="font-size:18px;"><span class="ani">Ani</span><span class="loka">Loka</span></span>
+    <span>&copy; 2026 AniLoka. Manga, in gold standard.</span>
+    <span><a href="about.html" style="color:var(--ink-faint);">About</a> · <a href="contact.html" style="color:var(--ink-faint);">Contact</a> · <a href="terms-and-conditions.html" style="color:var(--ink-faint);">Terms</a> · <a href="privacy-policy.html" style="color:var(--ink-faint);">Privacy</a></span>
+  </div>
+</footer>
+
+<nav class="tab-bar">
+  <ul>
+    <li><a href="home.html" data-nav="home"><span data-icon="home" data-size="20"></span><br>Home</a></li>
+    <li><a href="search.html" data-nav="search"><span data-icon="search" data-size="20"></span><br>Search</a></li>
+    <li><a href="library.html" data-nav="library"><span data-icon="library" data-size="20"></span><br>Library</a></li>
+    <li><a href="premium.html" data-nav="premium"><span data-icon="premium" data-size="20"></span><br>Premium</a></li>
+    <li><a href="profile.html" data-nav="profile"><span data-icon="profile" data-size="20"></span><br>Profile</a></li>
+  </ul>
+</nav>
+
+<div id="toast-stack"></div>
+
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("hamburger-btn").addEventListener("click", () => document.querySelector(".mobile-nav").classList.add("open"));
+  document.getElementById("mobile-logout").addEventListener("click", (e) => { e.preventDefault(); AUTH.logout(); });
+</script>
+<script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<a class="back-to-splash" href="index.html">&larr; Back</a>
+
+<div class="auth-screen">
+  <div class="auth-card">
+    <div class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></div>
+    <h1>Log in to keep reading</h1>
+
+    <div class="form-error" id="login-error"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field" id="f-email">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+        <div class="error-msg">Enter a valid email address.</div>
+      </div>
+
+      <div class="field" id="f-password">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+          <button type="button" class="toggle-pass" data-target="password">SHOW</button>
+        </div>
+        <div class="error-msg">Password must be at least 6 characters.</div>
+      </div>
+
+      <div class="auth-row-between" style="justify-content:flex-end;">
+        <a href="#" id="forgot-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit">Log In</button>
+    </form>
+
+    <div class="auth-switch">Don't have an account? <a href="signup.html">Sign up</a></div>
+  </div>
+</div>
+
+<div id="toast-stack"></div>
+
+<script src="js/data.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  function setFieldError(id, invalid) {
+    document.getElementById(id).classList.toggle("invalid", invalid);
+  }
+
+  document.querySelectorAll(".toggle-pass").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const input = document.getElementById(btn.dataset.target);
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      btn.textContent = show ? "HIDE" : "SHOW";
+    });
+  });
+
+  document.getElementById("forgot-link").addEventListener("click", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    if (!email) { toast("Enter your email above first, then tap Forgot password.", "error"); return; }
+    const res = await AUTH.forgotPassword(email);
+    toast(res.ok ? (res.message || "Check your inbox for a reset link.") : res.error, res.ok ? "success" : "error");
+  });
+
+  document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const errorBox = document.getElementById("login-error");
+    errorBox.classList.remove("show");
+
+    // Hidden admin shortcut: these exact credentials on the normal login form skip
+    // straight into the admin panel, no separate admin login step needed. Not shown
+    // or hinted anywhere in the UI — only someone who already knows it can use it.
+    // (Real security once the backend is connected comes from server-side role
+    // checks, not from this being secret — see aniloka-backend/README.md.)
+    const adminEmails = ["aniloka@admin.com", "aniloka@admin.gmail"];
+    if (adminEmails.includes(email.toLowerCase()) && password === "KarnaTejas67") {
+      localStorage.setItem("aniloka_admin_session", "true");
+      toast("Welcome back, admin.", "success");
+      setTimeout(() => window.location.href = "admin.html", 350);
+      return;
+    }
+
+    let valid = true;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setFieldError("f-email", !emailOk); if (!emailOk) valid = false;
+    setFieldError("f-password", password.length < 6); if (password.length < 6) valid = false;
+    if (!valid) return;
+
+    const submitBtn = document.getElementById("login-submit");
+    submitBtn.disabled = true; submitBtn.textContent = "Logging in…";
+
+    const res = await AUTH.login({ email, password });
+
+    submitBtn.disabled = false; submitBtn.textContent = "Log In";
+
+    if (res.ok) {
+      toast("Welcome back!", "success");
+      setTimeout(() => window.location.href = "home.html", 400);
+    } else {
+      errorBox.textContent = res.error;
+      errorBox.classList.add("show");
+    }
+  });
+
+  // if already logged in, skip straight to home
+  if (DB.getSession()) window.location.href = "home.html";
+</script>
+</body>
+</html>

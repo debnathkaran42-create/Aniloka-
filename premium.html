@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+
+<div id="page-loader"><div class="loader-ring"></div></div>
+
+<header class="topnav">
+  <a href="home.html" class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></a>
+  <nav class="topnav-links">
+    <a href="home.html" data-nav="home">Home</a>
+    <a href="search.html" data-nav="search">Search</a>
+    <a href="library.html" data-nav="library">Library</a>
+    <a href="premium.html" data-nav="premium">Premium</a>
+    <a href="profile.html" data-nav="profile">Profile</a>
+  </nav>
+  <div class="topnav-actions">
+    <button class="avatar-btn" onclick="location.href='profile.html'">U</button>
+    <button class="hamburger" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav">
+  <button class="close-mobile">&times;</button>
+  <a href="home.html">Home</a>
+  <a href="search.html">Search</a>
+  <a href="library.html">Library</a>
+  <a href="premium.html">Premium</a>
+  <a href="profile.html">Profile</a>
+  <a href="#" id="mobile-logout">Log Out</a>
+</div>
+
+<main class="container">
+  <section class="premium-hero">
+    <div class="eyebrow">AniLoka Premium</div>
+    <h1>Read without limits</h1>
+    <p>Go ad-free, unlock exclusive chapters, and switch into the Premium purple theme.</p>
+  </section>
+
+  <div class="current-plan-banner hidden" id="current-plan-banner">
+    <div><b>You're Premium</b><div class="plan-detail" style="font-size:12.5px;color:var(--ink-faint);"></div></div>
+    <button class="btn btn-ghost btn-sm" id="cancel-premium">Cancel Plan</button>
+  </div>
+
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-name">Weekly</div>
+      <div class="plan-price">₹2.99<span>/week</span></div>
+      <div class="plan-sub">Try Premium, cancel anytime</div>
+      <button class="btn btn-outline btn-block" data-plan="weekly">Choose Plan</button>
+    </div>
+    <div class="plan-card best">
+      <div class="best-badge">Most Popular</div>
+      <div class="plan-name">Monthly</div>
+      <div class="plan-price">₹8.99<span>/month</span></div>
+      <div class="plan-sub">Save 25% vs weekly</div>
+      <button class="btn btn-primary btn-block" data-plan="monthly">Choose Plan</button>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Yearly</div>
+      <div class="plan-price">₹69.99<span>/year</span></div>
+      <div class="plan-sub">Best value — save 35%</div>
+      <button class="btn btn-outline btn-block" data-plan="yearly">Choose Plan</button>
+    </div>
+  </div>
+
+  <div class="benefits-grid">
+    <div class="benefit-card"><div class="icon"><span data-icon="noAds" data-size="26"></span></div><h3>No Ads</h3><p>Read every chapter uninterrupted.</p></div>
+    <div class="benefit-card"><div class="icon"><span data-icon="unlock" data-size="26"></span></div><h3>Exclusive Chapters</h3><p>Early access to select releases.</p></div>
+    <div class="benefit-card"><div class="icon"><span data-icon="palette" data-size="26"></span></div><h3>Premium Theme</h3><p>Unlock the purple AniLoka look.</p></div>
+    <div class="benefit-card"><div class="icon"><span data-icon="premium" data-size="26"></span></div><h3>Premium Badge</h3><p>Show your support on your profile.</p></div>
+    <div class="benefit-card"><div class="icon"><span data-icon="chart" data-size="26"></span></div><h3>Reading Statistics</h3><p>Track your reading habits over time.</p></div>
+    <div class="benefit-card"><div class="icon"><span data-icon="zap" data-size="26"></span></div><h3>Priority Updates</h3><p>New chapters appear for you first.</p></div>
+  </div>
+</main>
+
+<nav class="tab-bar">
+  <ul>
+    <li><a href="home.html" data-nav="home"><span data-icon="home" data-size="20"></span><br>Home</a></li>
+    <li><a href="search.html" data-nav="search"><span data-icon="search" data-size="20"></span><br>Search</a></li>
+    <li><a href="library.html" data-nav="library"><span data-icon="library" data-size="20"></span><br>Library</a></li>
+    <li><a href="premium.html" data-nav="premium"><span data-icon="premium" data-size="20"></span><br>Premium</a></li>
+    <li><a href="profile.html" data-nav="profile"><span data-icon="profile" data-size="20"></span><br>Profile</a></li>
+  </ul>
+</nav>
+
+<div id="toast-stack"></div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/payment-config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("hamburger-btn").addEventListener("click", () => document.querySelector(".mobile-nav").classList.add("open"));
+  document.getElementById("mobile-logout").addEventListener("click", (e) => { e.preventDefault(); AUTH.logout(); });
+</script>
+<script src="js/premium.js"></script>
+</body>
+</html>

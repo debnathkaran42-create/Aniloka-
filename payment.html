@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pay with UPI — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+
+<div id="page-loader"><div class="loader-ring"></div></div>
+
+<header class="topnav">
+  <a href="home.html" class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></a>
+  <div class="topnav-actions">
+    <button class="avatar-btn" onclick="location.href='profile.html'">U</button>
+    <button class="hamburger" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav">
+  <button class="close-mobile">&times;</button>
+  <a href="home.html">Home</a>
+  <a href="search.html">Search</a>
+  <a href="library.html">Library</a>
+  <a href="premium.html">Premium</a>
+  <a href="profile.html">Profile</a>
+  <a href="#" id="mobile-logout">Log Out</a>
+</div>
+
+<main class="container" id="pay-root" style="max-width:460px;">
+  <h1 style="font-family:var(--display); font-size:28px; letter-spacing:.02em; padding-top:26px; text-align:center;">Pay with UPI</h1>
+
+  <div id="pay-loading" style="text-align:center; padding:60px 0;">
+    <div class="loader-ring" style="margin:0 auto;"></div>
+  </div>
+
+  <div id="pay-content" class="pay-card hidden">
+    <div class="pay-summary">
+      <div class="label">You're paying for</div>
+      <div class="item-name" id="item-name"></div>
+      <div class="amount" id="amount"></div>
+    </div>
+
+    <div class="upi-id-row">
+      <span class="vpa" id="vpa-text"></span>
+      <button class="btn btn-outline btn-sm" id="copy-vpa-btn">Copy</button>
+    </div>
+
+    <div class="qr-wrap">
+      <div class="qr-box" id="qr-box"></div>
+      <p class="qr-hint">Scan with any UPI app — Google Pay, PhonePe, Paytm, BHIM, or your bank's app.</p>
+    </div>
+
+    <a class="btn btn-primary btn-block btn-lg" id="pay-upi-btn" href="#" target="_blank" rel="noopener">Pay with any UPI App</a>
+
+    <div class="pay-steps">
+      <div class="step"><div class="num">1</div><div class="txt">Scan the QR code or tap "Pay with any UPI App" above.</div></div>
+      <div class="step"><div class="num">2</div><div class="txt">Complete the payment in your UPI app for the exact amount shown.</div></div>
+      <div class="step"><div class="num">3</div><div class="txt">Come back here and enter the UTR / Transaction ID from your payment.</div></div>
+      <div class="step"><div class="num">4</div><div class="txt">An admin verifies it against the bank statement, then unlocks your purchase.</div></div>
+    </div>
+
+    <form class="utr-form" id="utr-form">
+      <div class="field">
+        <label for="utr-input">UTR / Transaction ID</label>
+        <input type="text" id="utr-input" placeholder="e.g. 123456789012" required minlength="6">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submit-utr-btn">Submit Payment</button>
+      <p class="utr-help">You'll find this in your UPI app's payment history, usually 12 digits.</p>
+    </form>
+  </div>
+
+  <div id="pay-status-screen" class="pay-status-screen pending hidden"></div>
+</main>
+
+<div id="toast-stack"></div>
+
+<script src="js/qrcode-lib.js"></script>
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("hamburger-btn").addEventListener("click", () => document.querySelector(".mobile-nav").classList.add("open"));
+  document.getElementById("mobile-logout").addEventListener("click", (e) => { e.preventDefault(); AUTH.logout(); });
+</script>
+<script src="js/payment.js"></script>
+</body>
+</html>

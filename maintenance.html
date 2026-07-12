@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Under Maintenance — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/splash.css">
+</head>
+<body>
+
+<div class="splash">
+  <div class="splash-glow"></div>
+  <div class="splash-content">
+    <div class="splash-mark"><span class="ani">Ani</span><span class="loka">Loka</span></div>
+    <div class="splash-rule"></div>
+    <p class="splash-tagline">We'll be right back</p>
+    <p style="color:var(--ink-faint); font-size:13px; max-width:280px; margin:14px auto 0;">
+      AniLoka is down for scheduled maintenance. Please check back shortly.
+    </p>
+    <div class="splash-enter">
+      <button id="retry-btn" class="btn btn-outline">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script>
+  document.getElementById("retry-btn").addEventListener("click", () => {
+    const s = DB.getSettings();
+    window.location.href = s.maintenanceMode ? "maintenance.html" : "home.html";
+  });
+</script>
+</body>
+</html>

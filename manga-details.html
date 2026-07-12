@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manga Details — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/details.css">
+</head>
+<body>
+
+<div id="page-loader"><div class="loader-ring"></div></div>
+
+<header class="topnav">
+  <a href="home.html" class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></a>
+  <div class="topnav-actions">
+    <a href="search.html" class="icon-btn" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    </a>
+    <button class="avatar-btn" onclick="location.href='profile.html'">U</button>
+    <button class="hamburger" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav">
+  <button class="close-mobile">&times;</button>
+  <a href="home.html">Home</a>
+  <a href="search.html">Search</a>
+  <a href="library.html">Library</a>
+  <a href="premium.html">Premium</a>
+  <a href="profile.html">Profile</a>
+  <a href="#" id="mobile-logout">Log Out</a>
+</div>
+
+<div id="details-root">
+  <section class="details-hero">
+    <div class="bg" id="hero-bg"></div>
+    <div class="container details-grid">
+      <div class="details-cover" id="cover-box"></div>
+      <div class="details-info">
+        <h1 id="m-title"></h1>
+        <div class="details-meta-row" id="m-meta"></div>
+        <div class="details-genres" id="m-genres"></div>
+        <p class="details-desc" id="m-desc"></p>
+        <div class="details-actions">
+          <a id="read-now-btn" class="btn btn-primary" href="#">Read Now</a>
+          <button id="fav-btn" class="icon-btn" title="Favorite"><span data-icon="heart" data-size="16"></span></button>
+          <button id="share-btn" class="icon-btn" title="Share">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5 15.4 17.5M15.4 6.5 8.6 10.5"/></svg>
+          </button>
+          <select class="field" id="library-select" style="width:auto; padding:10px 14px; border-radius:99px;">
+            <option value="">Add to Library</option>
+            <option value="reading">Reading</option>
+            <option value="planToRead">Plan to Read</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="ad-slot ad-banner"></div>
+
+    <div class="details-tabs">
+      <button class="active" data-tab="chapters">Chapters</button>
+      <button data-tab="recs">Recommendations</button>
+      <button data-tab="reviews">Reviews</button>
+    </div>
+
+    <div class="tab-panel" id="panel-chapters">
+      <div id="chapter-list"></div>
+    </div>
+
+    <div class="tab-panel hidden" id="panel-recs">
+      <div class="rail" id="rail-recs"></div>
+    </div>
+
+    <div class="tab-panel hidden" id="panel-reviews">
+      <form id="review-form" class="review-form" style="margin-bottom:20px;">
+        <div class="field">
+          <label for="review-text">Write a review</label>
+          <textarea id="review-text" placeholder="What did you think of this manga?"></textarea>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <select id="review-rating" class="field" style="width:auto; margin:0;">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Post Review</button>
+        </div>
+      </form>
+      <div id="review-list"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <span class="wordmark" style="font-size:18px;"><span class="ani">Ani</span><span class="loka">Loka</span></span>
+    <span>&copy; 2026 AniLoka.</span>
+  </div>
+</footer>
+
+<nav class="tab-bar">
+  <ul>
+    <li><a href="home.html" data-nav="home"><span data-icon="home" data-size="20"></span><br>Home</a></li>
+    <li><a href="search.html" data-nav="search"><span data-icon="search" data-size="20"></span><br>Search</a></li>
+    <li><a href="library.html" data-nav="library"><span data-icon="library" data-size="20"></span><br>Library</a></li>
+    <li><a href="premium.html" data-nav="premium"><span data-icon="premium" data-size="20"></span><br>Premium</a></li>
+    <li><a href="profile.html" data-nav="profile"><span data-icon="profile" data-size="20"></span><br>Profile</a></li>
+  </ul>
+</nav>
+
+<div id="toast-stack"></div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/payment-config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("hamburger-btn").addEventListener("click", () => document.querySelector(".mobile-nav").classList.add("open"));
+  document.getElementById("mobile-logout").addEventListener("click", (e) => { e.preventDefault(); AUTH.logout(); });
+</script>
+<script src="js/details.js"></script>
+</body>
+</html>

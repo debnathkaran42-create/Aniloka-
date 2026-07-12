@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Reader — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/reader.css">
+</head>
+<body>
+
+<div id="page-loader"><div class="loader-ring"></div></div>
+<div class="brightness-overlay" id="brightness-overlay"></div>
+<div class="watermark-overlay" id="watermark-overlay"></div>
+<div class="protection-blur" id="protection-blur">
+  <div class="protection-msg"><span data-icon="lock" data-size="26"></span><br>Content hidden for protection</div>
+</div>
+
+<div class="reader-shell" id="reader-root">
+  <div class="tap-zone left" id="tap-left"></div>
+  <div class="tap-zone right" id="tap-right"></div>
+  <div id="toggle-bars-zone" style="position:fixed; inset:0 20% 0 20%; z-index:39;"></div>
+
+  <header class="reader-topbar" id="reader-topbar">
+    <button class="icon-btn back-btn" id="back-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="r-title">
+      <div class="m-title" id="r-manga-title"></div>
+      <div class="ch-title" id="r-chapter-title"></div>
+    </div>
+    <select id="chapter-select"></select>
+    <button class="icon-btn" id="bookmark-btn" title="Bookmark chapter"><span data-icon="bookmark" data-size="17"></span></button>
+    <button class="icon-btn" id="tools-btn" title="Reader settings">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <div class="reader-viewport mode-vertical" id="reader-viewport">
+    <div id="reader-loader"><div class="loader-ring"></div></div>
+  </div>
+
+  <footer class="reader-bottombar" id="reader-bottombar">
+    <button class="icon-btn" id="prev-btn" title="Previous page">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <input type="range" class="page-slider" id="page-slider" min="1" value="1" step="1">
+    <span class="page-count" id="page-count">1 / 1</span>
+    <button class="icon-btn" id="next-btn" title="Next page">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </footer>
+
+  <div class="tools-panel" id="tools-panel">
+    <div class="t-row">
+      <label>Reading Mode</label>
+      <div class="mode-toggle" id="mode-toggle">
+        <button data-mode="vertical">Vertical</button>
+        <button data-mode="horizontal">Horizontal</button>
+      </div>
+    </div>
+    <div class="t-row">
+      <label>Direction</label>
+      <button class="btn btn-ghost btn-sm" id="direction-toggle">Left <span data-icon="arrowRight" data-size="13"></span> Right</button>
+    </div>
+    <div class="t-row">
+      <label>Theme</label>
+      <button class="btn btn-ghost btn-sm" id="theme-toggle">Dark Mode</button>
+    </div>
+    <div class="t-row">
+      <label for="zoom-range">Zoom</label>
+      <input type="range" id="zoom-range" min="0.6" max="2.5" step="0.05" value="1">
+    </div>
+    <div class="t-row">
+      <label for="brightness-range">Dim Screen</label>
+      <input type="range" id="brightness-range" min="0" max="0.85" step="0.05" value="0">
+    </div>
+    <div class="t-row">
+      <label>Fullscreen</label>
+      <button class="icon-btn" id="fullscreen-btn" title="Toggle fullscreen"><span data-icon="fullscreen" data-size="16"></span></button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-stack"></div>
+
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/reader.js"></script>
+</body>
+</html>

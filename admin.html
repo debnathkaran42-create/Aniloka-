@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — AniLoka</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ============== LOGIN GATE ============== -->
+<div class="admin-login-screen" id="admin-login-screen">
+  <div class="auth-screen" style="min-height:auto; width:100%;">
+    <div class="auth-card">
+      <div class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></div>
+      <h1>Admin Panel</h1>
+      <div class="form-error" id="admin-login-error"></div>
+      <form id="admin-login-form" novalidate>
+        <div class="field">
+          <label for="admin-email">Admin Email</label>
+          <input type="email" id="admin-email" required>
+        </div>
+        <div class="field">
+          <label for="admin-password">Admin Password</label>
+          <input type="password" id="admin-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+      </form>
+      <p style="font-size:11.5px; color:var(--ink-faint); margin-top:16px; text-align:center;">
+        Default demo login: aniloka@admin.com / KarnaTejas67 — change this in js/admin.js
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============== ADMIN APP ============== -->
+<div class="admin-shell hidden" id="admin-shell">
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <span class="wordmark"><span class="ani">Ani</span><span class="loka">Loka</span></span>
+    <span class="admin-tag">Admin Panel</span>
+    <nav class="admin-nav">
+      <button class="active" data-section="dashboard"><span data-icon="chart" data-size="16"></span> Dashboard</button>
+      <button data-section="manga"><span data-icon="library" data-size="16"></span> Manage Manga</button>
+      <button data-section="chapters"><span data-icon="book" data-size="16"></span> Manage Chapters</button>
+      <button data-section="users"><span data-icon="users" data-size="16"></span> Manage Users</button>
+      <button data-section="ads"><span data-icon="megaphone" data-size="16"></span> Manage Ads</button>
+      <button data-section="premium"><span data-icon="premium" data-size="16"></span> Manage Premium</button>
+      <button data-section="payments"><span data-icon="cart" data-size="16"></span> Manage Payments</button>
+      <button data-section="homepage"><span data-icon="home" data-size="16"></span> Manage Homepage</button>
+      <button data-section="site-settings"><span data-icon="settings" data-size="16"></span> Site Settings</button>
+    </nav>
+    <button class="btn btn-ghost btn-block admin-logout" id="admin-logout-btn">Log Out</button>
+    <a class="btn btn-outline btn-block" style="margin-top:8px;" href="home.html">View Site</a>
+  </aside>
+
+  <main class="admin-main">
+    <button class="hamburger" id="admin-hamburger" style="margin-bottom:16px;"><span data-icon="menu" data-size="18"></span></button>
+
+    <!-- Dashboard -->
+    <section class="admin-panel-section active" id="section-dashboard">
+      <div class="admin-header"><h1>Dashboard</h1></div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="num" id="stat-manga">0</div><div class="label">Manga</div></div>
+        <div class="stat-card"><div class="num" id="stat-chapters">0</div><div class="label">Chapters</div></div>
+        <div class="stat-card"><div class="num" id="stat-users">0</div><div class="label">Users</div></div>
+        <div class="stat-card"><div class="num" id="stat-premium">0</div><div class="label">Premium Users</div></div>
+        <div class="stat-card"><div class="num" id="stat-pending-payments">0</div><div class="label">Pending Payments</div></div>
+      </div>
+      <h2 style="font-size:15px; margin-bottom:10px;">Recent Activity</h2>
+      <div id="admin-log"></div>
+    </section>
+
+    <!-- Manga -->
+    <section class="admin-panel-section" id="section-manga">
+      <div class="admin-header"><h1 id="manga-form-title">Add Manga</h1><span id="manga-id-hint" style="font-size:11.5px;color:var(--ink-faint);"></span></div>
+      <form class="admin-form" id="manga-form">
+        <div class="grid2">
+          <div class="field"><label>Title</label><input id="m-form-title" required></div>
+          <div class="field"><label>Author</label><input id="m-form-author"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Artist</label><input id="m-form-artist"></div>
+          <div class="field"><label>Publisher</label><input id="m-form-publisher"></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label>Year</label><input type="number" id="m-form-year"></div>
+          <div class="field"><label>Rating (0-5)</label><input type="number" step="0.1" min="0" max="5" id="m-form-rating"></div>
+          <div class="field"><label>Status</label>
+            <select id="m-form-status">
+              <option>Ongoing</option><option>Completed</option><option>Hiatus</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Description</label><textarea id="m-form-desc" rows="3"></textarea></div>
+        <div class="grid2">
+          <div class="grid2">
+            <div class="field">
+              <label>Cover Image</label>
+              <div class="img-picker" id="cover-picker">
+                <div class="img-preview" id="cover-preview"><span>No cover yet</span></div>
+                <div class="img-picker-actions">
+                  <button type="button" class="btn btn-outline btn-sm" id="cover-add-btn">+ Add Image</button>
+                  <button type="button" class="btn btn-danger btn-sm hidden" id="cover-remove-btn">Remove</button>
+                </div>
+                <input type="file" accept="image/*" id="cover-file-input" class="hidden">
+              </div>
+            </div>
+            <div class="field">
+              <label>Banner Image</label>
+              <div class="img-picker" id="banner-picker">
+                <div class="img-preview" id="banner-preview"><span>No banner yet</span></div>
+                <div class="img-picker-actions">
+                  <button type="button" class="btn btn-outline btn-sm" id="banner-add-btn">+ Add Image</button>
+                  <button type="button" class="btn btn-danger btn-sm hidden" id="banner-remove-btn">Remove</button>
+                </div>
+                <input type="file" accept="image/*" id="banner-file-input" class="hidden">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field"><label>Genres</label><div id="genre-checklist"></div></div>
+        <div class="field" style="display:flex; gap:20px;">
+          <label class="checkbox-row"><input type="checkbox" id="m-form-featured"> Featured</label>
+          <label class="checkbox-row"><input type="checkbox" id="m-form-trending"> Trending</label>
+          <label class="checkbox-row"><input type="checkbox" id="m-form-popular"> Popular</label>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" class="btn btn-primary">Save Manga</button>
+          <button type="button" class="btn btn-ghost" id="manga-form-cancel">Clear Form</button>
+        </div>
+      </form>
+
+      <table class="admin-table">
+        <thead><tr><th>Title</th><th>Author</th><th>Chapters</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="manga-table-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Chapters -->
+    <section class="admin-panel-section" id="section-chapters">
+      <div class="admin-header"><h1>Manage Chapters</h1></div>
+      <div class="field" style="max-width:340px;"><label>Select Manga</label><select id="ch-manga-select"></select></div>
+
+      <form class="admin-form" id="chapter-form">
+        <div id="chapter-form-title" style="font-weight:700; margin-bottom:14px;">Add Chapter</div>
+        <div class="grid3">
+          <div class="field"><label>Chapter Number</label><input type="number" id="ch-form-number" required></div>
+          <div class="field"><label>Chapter Title</label><input id="ch-form-title"></div>
+          <div class="field"><label>Release Date</label><input type="date" id="ch-form-date"></div>
+        </div>
+        <div class="field">
+          <label>Chapter Pages</label>
+          <div class="page-upload-toolbar">
+            <button type="button" class="btn btn-outline btn-sm" id="pages-add-btn">+ Add Images</button>
+            <input type="file" accept="image/*" multiple id="pages-file-input" class="hidden">
+            <span class="page-count-label" id="page-count-label">0 pages</span>
+          </div>
+          <div class="page-thumb-grid" id="page-thumb-grid"></div>
+          <p style="font-size:11px; color:var(--ink-faint); margin-top:8px;">
+            Pick chapter page images from your gallery, in reading order. Drag isn't supported yet — remove and re-add to reorder.
+            Prefer folders instead? Set a page count manually and follow the path hint below.
+          </p>
+        </div>
+        <div class="field" style="max-width:220px;"><label>Or: Manual Page Count (folder method)</label><input type="number" id="ch-form-pages" min="0" placeholder="e.g. 18"></div>
+        <div class="field" style="display:flex; gap:20px; align-items:center;">
+          <label class="checkbox-row"><input type="checkbox" id="ch-form-paid"> Paid Chapter</label>
+          <div style="flex:1; max-width:160px;">
+            <input type="number" id="ch-form-price" min="0" step="0.01" placeholder="Price (e.g. 0.99)">
+          </div>
+        </div>
+        <p style="font-size:11.5px; color:var(--ink-faint); margin-top:-8px;">
+          Premium members can read paid chapters automatically. Everyone else can unlock this one chapter for the price above.
+        </p>
+        <div class="path-hint" id="ch-path-hint"></div>
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button type="submit" class="btn btn-primary">Save Chapter</button>
+          <button type="button" class="btn btn-ghost" id="chapter-form-cancel">Clear Form</button>
+        </div>
+      </form>
+
+      <table class="admin-table">
+        <thead><tr><th>#</th><th>Title</th><th>Pages</th><th>Price</th><th>Actions</th></tr></thead>
+        <tbody id="chapter-table-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Users -->
+    <section class="admin-panel-section" id="section-users">
+      <div class="admin-header"><h1>Manage Users</h1></div>
+      <table class="admin-table">
+        <thead><tr><th>Username</th><th>Email</th><th>Plan</th><th>Actions</th></tr></thead>
+        <tbody id="users-table-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Ads -->
+    <section class="admin-panel-section" id="section-ads">
+      <div class="admin-header"><h1>Manage Ads</h1></div>
+      <div class="admin-form">
+        <div class="settings-row" style="border:none; padding:6px 0;">
+          <div><div>Ads Enabled Site-wide</div><div style="font-size:11.5px;color:var(--ink-faint);">Free users see banner, rewarded, and interstitial ad slots</div></div>
+          <label class="switch"><input type="checkbox" id="ads-enabled-toggle"><span class="track"></span><span class="thumb"></span></label>
+        </div>
+        <p style="font-size:12px; color:var(--ink-faint); margin-top:14px;">
+          Ad slots are currently placeholder boxes (<code>.ad-slot</code> in css/main.css). Swap in your real AdSense
+          (or other network) script and unit codes once your domain is approved.
+        </p>
+      </div>
+    </section>
+
+    <!-- Premium -->
+    <section class="admin-panel-section" id="section-premium">
+      <div class="admin-header"><h1>Manage Premium</h1></div>
+      <div class="admin-form">
+        <p style="font-size:12px; color:var(--ink-faint); margin-bottom:14px;">
+          Plan prices are edited in Site Settings. Payments come in through the free UPI flow
+          (Manage Payments) by default, or Razorpay automatically if you've configured a real key
+          in js/payment-config.js.
+        </p>
+        <h2 style="font-size:14px; margin-bottom:10px;">Premium Subscribers</h2>
+        <div id="premium-users-list"></div>
+      </div>
+    </section>
+
+    <!-- Payments -->
+    <section class="admin-panel-section" id="section-payments">
+      <div class="admin-header"><h1>Manage Payments</h1></div>
+      <div class="admin-form">
+        <div class="field" style="max-width:260px;">
+          <label>UPI ID (VPA) you receive payments to</label>
+          <input id="upi-vpa-input" placeholder="yourupi@bank">
+        </div>
+        <div class="field" style="max-width:260px;">
+          <label>Payee name shown in UPI apps</label>
+          <input id="upi-payee-input" placeholder="AniLoka">
+        </div>
+        <button class="btn btn-primary btn-sm" id="save-upi-btn">Save UPI Settings</button>
+      </div>
+
+      <h2 style="font-size:14px; margin:22px 0 10px;">Pending Verification</h2>
+      <table class="admin-table">
+        <thead><tr><th>User</th><th>Item</th><th>Amount</th><th>UTR</th><th>Actions</th></tr></thead>
+        <tbody id="payments-pending-body"></tbody>
+      </table>
+
+      <h2 style="font-size:14px; margin:26px 0 10px;">Payment History</h2>
+      <table class="admin-table">
+        <thead><tr><th>User</th><th>Item</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="payments-history-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Homepage -->
+    <section class="admin-panel-section" id="section-homepage">
+      <div class="admin-header"><h1>Manage Homepage</h1></div>
+      <div class="admin-form">
+        <div class="field" style="max-width:340px;">
+          <label>Featured Manga (Hero Banner)</label>
+          <select id="featured-select"></select>
+        </div>
+        <button class="btn btn-primary" id="save-featured-btn">Save Featured Manga</button>
+      </div>
+    </section>
+
+    <!-- Site Settings -->
+    <section class="admin-panel-section" id="section-site-settings">
+      <div class="admin-header"><h1>Site Settings</h1></div>
+
+      <div class="admin-form">
+        <h2 style="font-size:14px; margin-bottom:10px;">Maintenance Mode</h2>
+        <div class="settings-row" style="border:none; padding:6px 0;">
+          <div><div>Site Under Maintenance</div><div style="font-size:11.5px;color:var(--ink-faint);">When on, every page except this Admin Panel redirects visitors to a maintenance screen.</div></div>
+          <label class="switch"><input type="checkbox" id="maintenance-toggle"><span class="track"></span><span class="thumb"></span></label>
+        </div>
+      </div>
+
+      <div class="admin-form">
+        <h2 style="font-size:14px; margin-bottom:10px;">Premium Plan Prices</h2>
+        <p style="font-size:11.5px; color:var(--ink-faint); margin-bottom:14px;">These prices show live on the Premium page.</p>
+        <div class="grid3">
+          <div class="field"><label>Weekly ($)</label><input type="number" id="price-weekly" min="0" step="0.01"></div>
+          <div class="field"><label>Monthly ($)</label><input type="number" id="price-monthly" min="0" step="0.01"></div>
+          <div class="field"><label>Yearly ($)</label><input type="number" id="price-yearly" min="0" step="0.01"></div>
+        </div>
+        <button class="btn btn-primary" id="save-prices-btn">Save Prices</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toast-stack"></div>
+
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
